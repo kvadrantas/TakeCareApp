@@ -4,12 +4,12 @@
   }
   
   #schedule {
-    font-size: 8rem;
+    font-size: 6rem;
   }
   
   #dayNumber {
-    margin-top: 9rem;
-    font-size: 17rem;
+    margin-top: 5rem;
+    font-size: 15rem;
     font-weight: bold;
   }
   
@@ -99,6 +99,7 @@
   }
 
   #weekDay {
+    margin-top: 1rem;
     text-transform: capitalize;
   }
 
