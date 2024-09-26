@@ -1,0 +1,108 @@
+#app {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  #schedule {
+    font-size: 8rem;
+  }
+  
+  #dayNumber {
+    margin-top: 9rem;
+    font-size: 17rem;
+    font-weight: bold;
+  }
+  
+  #calendarPopup {
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #calendar {
+    position: absolute;
+    bottom: 0;
+    background-color: white;
+    padding: 20px;
+    width: calc(100% - 40px);
+    height: 43%;
+    top: 50%; right: 50%;
+    transform: translate(50%,-50%);
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: 3rem repeat(6, 1fr) !important;
+    gap: 10px;
+  }
+  
+  .calendar-day-header {
+    /* height: 20px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    cursor: pointer;
+  }
+
+  .calendar-day {
+    font-size: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #007bff;
+    color: #007bff;
+    cursor: pointer;
+  }
+  
+  #closeButton {
+    position: absolute;
+    font-size: 1.8rem;
+    padding: 5px;
+    top: 50px;
+    right: 25px;
+    padding: 10px;
+  }
+  
+  #calendarBody {
+  }
+
+  button {
+    font-size: 3rem;
+    padding: 15px 30px;
+    border: 3px solid #007bff;
+    color: #007bff;
+    background-color: #fff;
+    border-radius: 15px;
+    outline: 0;
+    cursor: pointer;
+  }
+
+  img {
+    max-height: 225px;
+  }
+
+  img:last-child {
+    max-height: 191px;
+  }
+
+  .icons {
+    margin-top: 312px;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  #weekDay {
+    text-transform: capitalize;
+  }
+
+  .header {
+    font-size: 2.2rem;
+    font-weight: 700;
+  }
