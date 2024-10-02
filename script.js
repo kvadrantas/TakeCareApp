@@ -7,15 +7,36 @@ const recipients = [
   "test5@example.com",
 ];
 
+const supremeDate = new Date('September 27, 2024 00:00:00');
 const girls = ["Luknė", "Rugilė", "Kamilė"];
 let currentGirlIndex = 0;
 const today = new Date();
+today.setHours(0);
+today.setMinutes(0);
+today.setSeconds(0);
+// const today = new Date('Septmber 30, 2024 00:00:00');
+// const today = new Date('Octoer 2, 2024 00:00:00');
+// const today = new Date('November 30, 2024 00:00:00');
+// const today = new Date('December 28, 2024 00:00:00');
+const month = document.getElementById('month');
+const dayDifference = getDayDifference(supremeDate, today);
+
+month.textContent = today.toLocaleString("lt-LT", {
+  month: "long",
+});
 currentDay = today.getDate();
-currentGirlIndex = (today.getDate() - 1) % girls.length;
+currentGirlIndex = (dayDifference - 1) % girls.length;
 
 // Get the number of days in the current month and log it to the console
 const dayCount = getDayCountInCurrentMonth();
 const weekdayIndex = getFirstWeekdayIndex();
+
+// console.log('today', today);
+// console.log('currentDay', currentDay);
+// console.log('dayCount', dayCount);
+// console.log('weekdayIndex', weekdayIndex);
+// console.log('dayDifference', dayDifference);
+// console.log('currentGirlIndex', currentGirlIndex);
 
 updateSchedule();
 
@@ -25,17 +46,10 @@ function updateSchedule() {
   const girlNameElement = document.getElementById("girlName");
 
   dayNumberElement.textContent = currentDay;
-  weekDayElement.textContent = new Date().toLocaleString("lt-LT", {
+  weekDayElement.textContent = today.toLocaleString("lt-LT", {
     weekday: "long",
   });
   girlNameElement.textContent = girls[currentGirlIndex];
-
-  //   currentDay++;
-  if (currentDay > dayCount) {
-    // Assuming a dayCount is day count in month
-    currentDay = 1;
-    currentGirlIndex = (currentGirlIndex + 1) % girls.length;
-  }
 
   sendEmail();
 }
@@ -81,19 +95,28 @@ function openCalendar() {
     calendarElement.appendChild(dayElement);
   }
 
-  for (let i = 1; i <= dayCount + weekdayIndex; i++) {
-    const currentDay = i - weekdayIndex;
+  for (let i = 1; i < dayCount + weekdayIndex; i++) {
+    const currentDay2 = i - weekdayIndex + 1;
     const dayElement = document.createElement("div");
     dayElement.classList.add("calendar-day");
 
-    if (i > weekdayIndex) {
-      dayElement.textContent = currentDay;
-      dayElement.dataset.day = currentDay;
-      dayElement.addEventListener("click", () => showHistory(currentDay));
+    if (i >= weekdayIndex) {
+      dayElement.textContent = currentDay2;
+      dayElement.dataset.day = currentDay2;
+      dayElement.addEventListener("click", () => showHistory(currentDay2));
 
-      // Add the first letter of the corresponding girl
-      const girlInitial = girls[(currentDay - 1) % girls.length][0];
+      // ------------------------------------------------------------------      
+      
+      let currentGirlIndex = 0;
+      const calendarDate = new Date(today.getFullYear(), today.getMonth(), currentDay2);
+      const dayDifference = getDayDifference(supremeDate, calendarDate);
+      currentGirlIndex = (dayDifference - 1) % girls.length;
+      const girlInitial = girls[currentGirlIndex][0];
       dayElement.textContent += ` (${girlInitial})`;
+
+      if (currentDay2 == currentDay) {
+        dayElement.style.backgroundColor = '#ffeb3b';
+      }
     }
 
     calendarElement.appendChild(dayElement);
@@ -124,7 +147,6 @@ const calendarButton = document.getElementById("calendarButton");
 calendarButton.addEventListener("click", openCalendar);
 
 function getDayCountInCurrentMonth() {
-  const today = new Date();
   const year = today.getFullYear();
   const month = today.getMonth();
 
@@ -138,14 +160,25 @@ function getDayCountInCurrentMonth() {
 }
 
 function getFirstWeekdayIndex() {
-  const today = new Date();
   const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
   let weekdayIndex = firstDayOfMonth.getDay();
 
   // Adjust the weekday index if the first day of the month is Sunday
   if (weekdayIndex === 0) {
-    weekdayIndex = 6;
+    weekdayIndex = 7;
   }
 
   return weekdayIndex;
+}
+
+function getDayDifference(date1, date2) {  
+  // Calculating the time difference
+  // of two dates
+  let Difference_In_Time = date2.getTime() - date1.getTime();
+  
+  // Calculating the no. of days between
+  // two dates
+  let Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24));
+  
+  return Difference_In_Days;
 }
